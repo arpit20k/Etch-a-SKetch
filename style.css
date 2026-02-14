@@ -42,8 +42,7 @@ h1{
     justify-content: center;
     gap: 15px;
 }
-
-.btn {
+.btn{
     padding: 12px 24px;
     font-size: 16px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -58,13 +57,22 @@ h1{
     transition: all 0.2s ease;
 }
 
-.btn:hover {
+.btn:hover{
     cursor: pointer;
     transform: translateY(-2px);
     box-shadow: 0 10px 20px rgba(0,0,0,0.25);
 }
 
-.btn:active {
+.btn:active{
     transform: translateY(1px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.colorPicker {
+    width: 50px;
+    height: 40px;
+    border: none;
+    padding: 0;
+    background: none;
+    cursor: pointer;
 }

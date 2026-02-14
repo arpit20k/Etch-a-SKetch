@@ -3,8 +3,23 @@ let container = document.querySelector(".container");
 let controls = document.querySelector(".controls");
 let pixels = 64;
 let mousedown = false;
-let color = document.querySelector(".color");
+let colorPicker = document.querySelector(".color");
 let reset = document.querySelector(".reset");
+let currentColor = colorPicker.value;
+let eraserBool = false;
+let draw = document.querySelector(".pen");
+let eraser = document.querySelector(".erase");
+
+draw.addEventListener("click",()=>{
+    eraserBool=false;
+});
+eraser.addEventListener("click",()=>{
+    eraserBool = true;
+});
+
+colorPicker.addEventListener("input", () => {
+    currentColor = colorPicker.value;
+});
 
 
 document.addEventListener("mousedown",()=>
@@ -14,6 +29,7 @@ document.addEventListener("mousedown",()=>
 document.addEventListener("mouseup",()=>
 {
     mousedown = false;
+
 });
 
 for(let i=0;i<pixels*pixels;i++)
@@ -27,12 +43,20 @@ for(let i=0;i<pixels*pixels;i++)
 {
     if(mousedown===true)
     {
-        cell.style.backgroundColor = "black";
+        cell.style.backgroundColor = currentColor;
+    }
+    if(eraserBool===true)
+    {
+        cell.style.backgroundColor = "aliceblue";
     }
 });
     cell.addEventListener("click",function()
 {
-        cell.style.backgroundColor = "black";
+        cell.style.backgroundColor = currentColor;
+    if(eraserBool===true)
+    {
+        cell.style.backgroundColor = "aliceblue";
+    }
 });
 }
 let cells = document.querySelectorAll(".cell");
