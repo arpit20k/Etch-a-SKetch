@@ -1,12 +1,37 @@
-.container{
+*{
+    box-sizing: border-box;
+}
+body{
+    margin: 0;
+    height: 100vh;
     display: flex;
-    background-color: black;   
-    flex-wrap: wrap; 
-    border: 1px solid;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.wrapper{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.container{
     width: 100%;
+    max-width: 100vh;   
+    aspect-ratio: 1/1;
+    display: flex;
+    flex-wrap: wrap;
 }
 .cell {
   aspect-ratio: 1 / 1;
+  background-color: aliceblue;
   box-sizing: border-box;
   border: 1px solid black;
+}
+h1{
+    text-align: center;
+    text-decoration: solid;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 10px;
 }
