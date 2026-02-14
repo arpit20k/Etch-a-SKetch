@@ -3,6 +3,9 @@ let container = document.querySelector(".container");
 let controls = document.querySelector(".controls");
 let pixels = 64;
 let mousedown = false;
+let color = document.querySelector(".color");
+let reset = document.querySelector(".reset");
+
 
 document.addEventListener("mousedown",()=>
 {
@@ -32,6 +35,10 @@ for(let i=0;i<pixels*pixels;i++)
         cell.style.backgroundColor = "black";
 });
 }
+let cells = document.querySelectorAll(".cell");
 
-let form = document.createElement("form");
-
+reset.addEventListener("click",function(e){
+    cells.forEach(cell => {
+        cell.style.backgroundColor="aliceblue";
+    });
+});
