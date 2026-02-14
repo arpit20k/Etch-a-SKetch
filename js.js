@@ -14,6 +14,11 @@ let hue = 0;
 let rainbowMode = false;
 let number = document.querySelector(".number");
 let form = document.querySelector("form");
+let shade = document.querySelector(".shade");
+let shadingMode = false;
+shade.addEventListener("click", () => {
+    shadingMode = !shadingMode;
+});
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -23,6 +28,8 @@ form.addEventListener("submit", (e) => {
 number.addEventListener("input",(e)=>
 {
     pixels=parseInt(e.target.value);
+    if(pixels>100) alert("INVALID VALUE"),pixels = 64;
+
     Grid(pixels);
 });
 rainbow.addEventListener("click",()=>{
@@ -57,13 +64,38 @@ document.addEventListener("mouseup",()=>
     mousedown = false;
 
 });
-Grid(pixels);
+
+function applyShading(cell) {
+    let currentShade = parseInt(cell.dataset.shade);
+
+    if (currentShade < 10) {
+        currentShade++;
+        cell.dataset.shade = currentShade;
+    }
+    let currentColor = window.getComputedStyle(cell).backgroundColor;
+    let values = currentColor.match(/\d+/g);
+    let r = parseInt(values[0]);
+    let g = parseInt(values[1]);
+    let b = parseInt(values[2]);
+     let factor = 0.9; 
+
+    r = Math.floor(r * factor);
+    g = Math.floor(g * factor);
+    b = Math.floor(b * factor);
+    let opacity = currentShade / 10;
+    cell.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+
+    shade++;
+    cell.dataset.shade = shade; 
+}
+
 function Grid(pixels)
 {
     container.innerHTML =``;
 for(let i=0;i<pixels*pixels;i++)
 {
     const cell = document.createElement("div");
+    cell.dataset.shade = 0;
     cell.classList.add("cell");
     cell.style.width = (100/pixels)+"%";
     container.appendChild(cell);
@@ -72,7 +104,10 @@ for(let i=0;i<pixels*pixels;i++)
 {
     if(mousedown===true)
     {
-        if(rainbowMode)
+        if (shadingMode) {
+        applyShading(cell);
+    }
+        else if(rainbowMode)
         {
             cell.style.backgroundColor=getRainbow();
         }
@@ -85,9 +120,14 @@ for(let i=0;i<pixels*pixels;i++)
         cell.style.backgroundColor = "aliceblue";
     }
 });
+
+
     cell.addEventListener("click",function()
 {
-      if(rainbowMode)
+    if (shadingMode) {
+        applyShading(cell);
+    }
+      else if(rainbowMode)
         {
             cell.style.backgroundColor=getRainbow();
         }
@@ -97,11 +137,17 @@ for(let i=0;i<pixels*pixels;i++)
     
 });
 }
+
+
+
 }
+
+Grid(pixels);
 let cells = document.querySelectorAll(".cell");
 
 reset.addEventListener("click",function(e){
     cells.forEach(cell => {
         cell.style.backgroundColor="aliceblue";
+        cell.dataset.shade=0;
     });
 });
