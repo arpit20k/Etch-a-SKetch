@@ -9,6 +9,32 @@ let currentColor = colorPicker.value;
 let eraserBool = false;
 let draw = document.querySelector(".pen");
 let eraser = document.querySelector(".erase");
+let rainbow = document.querySelector(".rainbow");
+let hue = 0;
+let rainbowMode = false;
+let number = document.querySelector(".number");
+let form = document.querySelector("form");
+
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
+});
+
+
+number.addEventListener("input",(e)=>
+{
+    pixels=parseInt(e.target.value);
+    Grid(pixels);
+});
+rainbow.addEventListener("click",()=>{
+    rainbowMode= !rainbowMode;
+});
+
+function getRainbow()
+{
+    let color = `hsl(${hue},100%,50%)`;
+    hue = (hue+5)%360;
+    return color;   
+};
 
 draw.addEventListener("click",()=>{
     eraserBool=false;
@@ -31,7 +57,10 @@ document.addEventListener("mouseup",()=>
     mousedown = false;
 
 });
-
+Grid(pixels);
+function Grid(pixels)
+{
+    container.innerHTML =``;
 for(let i=0;i<pixels*pixels;i++)
 {
     const cell = document.createElement("div");
@@ -43,7 +72,13 @@ for(let i=0;i<pixels*pixels;i++)
 {
     if(mousedown===true)
     {
-        cell.style.backgroundColor = currentColor;
+        if(rainbowMode)
+        {
+            cell.style.backgroundColor=getRainbow();
+        }
+        else{
+            cell.style.backgroundColor = currentColor;
+        }
     }
     if(eraserBool===true)
     {
@@ -52,12 +87,16 @@ for(let i=0;i<pixels*pixels;i++)
 });
     cell.addEventListener("click",function()
 {
-        cell.style.backgroundColor = currentColor;
-    if(eraserBool===true)
-    {
-        cell.style.backgroundColor = "aliceblue";
-    }
+      if(rainbowMode)
+        {
+            cell.style.backgroundColor=getRainbow();
+        }
+        else{
+            cell.style.backgroundColor = currentColor;
+        }
+    
 });
+}
 }
 let cells = document.querySelectorAll(".cell");
 
